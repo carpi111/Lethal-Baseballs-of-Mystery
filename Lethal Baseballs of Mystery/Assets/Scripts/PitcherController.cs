@@ -12,7 +12,7 @@ public class PitcherController : MonoBehaviour {
 	}
 	
 	void Update () {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButton(0)) {
             var newBaseball = Instantiate(Baseball, PitchPoint.position, PitchPoint.rotation);
             int random = Random.Range(0, 100);
             newBaseball.GetComponent<MeshRenderer>().material = random % 2 == 0 ? GoodBallMaterial : BadBallMaterial;

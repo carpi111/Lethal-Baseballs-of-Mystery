@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - HomeBase
+  - FirstBase
+  - SecondBase
+  - ThirdBase
+  - Batter
+  - FirstBaseman
+  - SecondBaseman
+  - ThirdBaseman
+  - Shortstop
+  - LeftFielder
+  - CenterFielder
+  - RightFielder
+  - Fielder
+  - GameManager
   layers:
   - Default
   - TransparentFX
