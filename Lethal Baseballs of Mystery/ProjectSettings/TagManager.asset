@@ -18,6 +18,7 @@ TagManager:
   - RightFielder
   - Fielder
   - GameManager
+  - Baseball
   layers:
   - Default
   - TransparentFX

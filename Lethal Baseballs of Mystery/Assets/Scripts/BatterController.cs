@@ -12,7 +12,10 @@ public class BatterController : MonoBehaviour {
 
     GameObject BaseToMoveTo;
 
+    GameManager GM;
+
 	void Start () {
+        GM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         FirstBase  = GameObject.FindWithTag("FirstBase");
         SecondBase = GameObject.FindWithTag("SecondBase");
         ThirdBase  = GameObject.FindWithTag("ThirdBase");
@@ -42,5 +45,19 @@ public class BatterController : MonoBehaviour {
 
     public void SetBaseToMoveTo(GameObject targetBase) {
         BaseToMoveTo = targetBase;
+    }
+
+    // check for player swing
+    // if SPACE is hit, check if ball is in hit box
+        // if so, hit ball
+        // if not, strike
+    void CheckSwing() {
+        if (!Input.GetKeyDown(KeyCode.Space)) return;
+
+        if (GM.IsBallInHitBox()) {
+            // hit ball
+        } else {
+            // strike
+        }
     }
 }
