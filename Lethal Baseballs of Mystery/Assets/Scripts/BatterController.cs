@@ -59,13 +59,13 @@ public class BatterController : MonoBehaviour {
 
         if (GM.BallIsInHitBox()) {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                // TODO: HIT BALL
+                // TODO: Hit ball
                 HasSwung = true;
                 print("SWUNG");
             }
         } else if (GM.BallDidExitHitBox()) {
             if (HasSwung) {
-                // TODO: RUN TO BASE
+                // TODO: Run to base
             } else {
                 GM.AddStrike();
             }

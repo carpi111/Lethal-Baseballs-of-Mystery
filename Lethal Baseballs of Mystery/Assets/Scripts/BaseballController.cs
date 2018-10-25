@@ -7,6 +7,7 @@ public class BaseballController : MonoBehaviour {
     public Transform PitchTarget;
 
     GameManager GM;
+    BatterController BC;
     Transform PositionToMoveTo;
 
 	void Start() {
@@ -26,6 +27,10 @@ public class BaseballController : MonoBehaviour {
         //    Destroy(gameObject);
         //}
 	}
+
+    void OnDestroy() {
+        BC.SetHasSwung(false);
+    }
 
     //void OnTriggerEnter(Collider other) {
     //    if (other.gameObject.CompareTag("Batter")) {
