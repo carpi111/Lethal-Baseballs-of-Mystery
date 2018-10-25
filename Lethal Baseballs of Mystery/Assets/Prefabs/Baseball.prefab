@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7639af1fbbfee4899a2f77c1d70d243b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  Speed: 2
   Fielders:
   - {fileID: 0}
   - {fileID: 0}
@@ -120,6 +120,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  PitchTarget: {fileID: 0}
 --- !u!135 &135807156337187818
 SphereCollider:
   m_ObjectHideFlags: 1

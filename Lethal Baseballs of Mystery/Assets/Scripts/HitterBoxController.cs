@@ -18,5 +18,6 @@ public class HitterBoxController : MonoBehaviour {
         if (!other.CompareTag("Baseball")) return;
 
         GM.SetBallInHitBox(false);
+        GM.SetBallExitedHitBox(true);
     }
 }

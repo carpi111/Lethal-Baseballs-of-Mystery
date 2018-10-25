@@ -3,16 +3,17 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-    GameManager GM;
-    Text StrikesCounter;
+    public Text StrikesCounter;
 
-	void Start () {
+    GameManager GM;
+
+	void Start() {
         GM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 	}
-	
-	void Update () {
-		
-	}
+
+    void Update() {
+        UpdateStrikesCounter();
+    }
 
     void UpdateStrikesCounter() {
         StrikesCounter.text = "Strikes: " + GM.GetStrikesCount().ToString();
