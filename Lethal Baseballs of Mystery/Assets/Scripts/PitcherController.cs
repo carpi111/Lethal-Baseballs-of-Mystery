@@ -8,14 +8,30 @@ public class PitcherController : MonoBehaviour {
     public Material BadBallMaterial;
     public Transform PitchTarget;
 
+    public int RandomizeScale;
+
+    Material CurrentBallMaterial;
+
 	void Update() {
         if (Input.GetMouseButtonDown(0)) {
-            var newBaseball = Instantiate(Baseball,
-                                          PitchPoint.position,
-                                          PitchPoint.rotation);
-            int random = Random.Range(0, 100);
-            newBaseball.GetComponent<MeshRenderer>().material =
-                           random % 2 == 0 ? GoodBallMaterial : BadBallMaterial;
+            Pitch();
         }
 	}
+
+    void Pitch() {
+        var newBaseball = Instantiate(Baseball,
+                                      PitchPoint.position,
+                                      PitchPoint.rotation);
+        SetCurrentBallMaterial();
+    }
+
+    void SetCurrentBallMaterial() {
+        int random = Random.Range(0, 100);
+        CurrentBallMaterial = random % RandomizeScale == 0
+            ? BadBallMaterial : GoodBallMaterial;
+    }
+
+    public Material GetCurrentBallMaterial() {
+        return CurrentBallMaterial;
+    }
 }

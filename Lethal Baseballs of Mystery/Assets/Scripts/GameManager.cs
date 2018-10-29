@@ -9,8 +9,21 @@ public class GameManager : MonoBehaviour {
     bool BallInHitBox;
     bool BallExitedHitBox;
 
+    PitcherController Pitcher;
+    BatterController Batter;
+
 	void Start() {
         Fielders = GameObject.FindGameObjectsWithTag("Fielder");
+        Pitcher = GameObject.FindWithTag("Pitcher").GetComponent<PitcherController>();
+        Batter = GameObject.FindWithTag("Batter").GetComponent<BatterController>();
+    }
+
+    public PitcherController GetPitcher() {
+        return Pitcher;
+    }
+
+    public BatterController GetBatter() {
+        return Batter;
     }
 
     public void SetBallInHitBox(bool val) {

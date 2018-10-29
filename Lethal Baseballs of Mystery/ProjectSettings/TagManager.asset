@@ -19,6 +19,8 @@ TagManager:
   - Fielder
   - GameManager
   - Baseball
+  - Pitcher
+  - HitterBox
   layers:
   - Default
   - TransparentFX

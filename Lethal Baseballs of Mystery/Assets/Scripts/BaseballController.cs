@@ -7,11 +7,14 @@ public class BaseballController : MonoBehaviour {
     public Transform PitchTarget;
 
     GameManager GM;
-    BatterController BC;
+    BatterController Batter;
+    PitcherController Pitcher;
     Transform PositionToMoveTo;
 
 	void Start() {
         GM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        Batter = GM.GetBatter();
+        Pitcher = GM.GetPitcher();
         //PositionToMoveTo = GameObject.FindWithTag("Batter").transform;
         PositionToMoveTo = GM.GetPitchTarget();
 
@@ -29,7 +32,7 @@ public class BaseballController : MonoBehaviour {
 	}
 
     void OnDestroy() {
-        BC.SetHasSwung(false);
+        Batter.SetHasSwung(false);
     }
 
     //void OnTriggerEnter(Collider other) {
@@ -39,6 +42,12 @@ public class BaseballController : MonoBehaviour {
     //        PositionToMoveTo = Fielders[random].transform;
     //    }
     //}
+
+    void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("HitterBox")) {
+            gameObject.GetComponent<MeshRenderer>().material = Pitcher.GetCurrentBallMaterial();
+        }
+    }
 
     public void MoveToPosition(Transform targetPosition) {
         transform.position = Vector3.MoveTowards(

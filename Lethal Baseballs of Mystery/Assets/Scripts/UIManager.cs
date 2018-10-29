@@ -16,6 +16,6 @@ public class UIManager : MonoBehaviour {
     }
 
     void UpdateStrikesCounter() {
-        StrikesCounter.text = "Strikes: " + GM.GetStrikesCount().ToString();
+        StrikesCounter.text = "Strikes: " + GM.GetStrikesCount().ToString() + "/3";
     }
 }

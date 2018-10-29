@@ -4,8 +4,10 @@ public class BatterController : MonoBehaviour {
 
     public float RunSpeed;
     public Vector3 PosAdjustment;
+    public Material BadBallMaterial;
 
     GameManager GM;
+    PitcherController Pitcher;
 
     GameObject FirstBase;
     GameObject SecondBase;
@@ -17,6 +19,7 @@ public class BatterController : MonoBehaviour {
 
 	void Start() {
         GM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+        Pitcher = GM.GetPitcher();
         FirstBase  = GameObject.FindWithTag("FirstBase");
         SecondBase = GameObject.FindWithTag("SecondBase");
         ThirdBase  = GameObject.FindWithTag("ThirdBase");
@@ -56,7 +59,6 @@ public class BatterController : MonoBehaviour {
     }
 
     void CheckSwing() {
-
         if (GM.BallIsInHitBox()) {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 // TODO: Hit ball
@@ -67,7 +69,10 @@ public class BatterController : MonoBehaviour {
             if (HasSwung) {
                 // TODO: Run to base
             } else {
-                GM.AddStrike();
+                // check if bad ball
+                if (Pitcher.GetCurrentBallMaterial() != BadBallMaterial) {
+                    GM.AddStrike();
+                }
             }
         }
 

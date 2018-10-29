@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 135036674}
   m_Layer: 0
   m_Name: HittingBox
-  m_TagString: Untagged
+  m_TagString: HitterBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 417908747}
   m_Layer: 0
   m_Name: Pitcher
-  m_TagString: Untagged
+  m_TagString: Pitcher
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -575,6 +575,7 @@ MonoBehaviour:
   GoodBallMaterial: {fileID: 2100000, guid: 16778ddaa369e460f8c33fcd93b8d3a8, type: 2}
   BadBallMaterial: {fileID: 2100000, guid: 9b133381108544abab87d5917b2574d1, type: 2}
   PitchTarget: {fileID: 0}
+  RandomizeScale: 3
 --- !u!1 &485310808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1044,7 +1045,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1100053030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100, y: -40, z: 0}
+  m_LocalPosition: {x: 143.53003, y: -40, z: 0}
   m_LocalScale: {x: 0.11256395, y: 0.11256396, z: 0.11256396}
   m_Children: []
   m_Father: {fileID: 1443383583}
@@ -1052,8 +1053,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1725, y: 438.2}
+  m_AnchoredPosition: {x: 1.03, y: 0}
+  m_SizeDelta: {x: 2376.18, y: 438.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1100053032
 MonoBehaviour:
@@ -1087,7 +1088,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Strikes: 0'
+  m_Text: 'Strikes: 0/3'
 --- !u!222 &1100053033
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1212,6 +1213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RunSpeed: 6
   PosAdjustment: {x: -1, y: 0, z: -1}
+  BadBallMaterial: {fileID: 2100000, guid: 9b133381108544abab87d5917b2574d1, type: 2}
 --- !u!23 &1342465248
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1413,7 +1415,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 15, y: -15}
-  m_SizeDelta: {x: 200, y: 80}
+  m_SizeDelta: {x: 285, y: 80}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1443383584
 MonoBehaviour:
