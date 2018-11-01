@@ -15,33 +15,26 @@ public class BaseballController : MonoBehaviour {
         GM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
         Batter = GM.GetBatter();
         Pitcher = GM.GetPitcher();
-        //PositionToMoveTo = GameObject.FindWithTag("Batter").transform;
         PositionToMoveTo = GM.GetPitchTarget();
 
         Fielders = GM.Fielders;
 
-        Destroy(gameObject, 5f);
+        GM.SetBaseball(gameObject);
+
+        Destroy(gameObject, 10);
 	}
 	
 	void Update() {
         MoveToPosition(PositionToMoveTo);
-
-        //if (transform.position == PositionToMoveTo.position) {
-        //    Destroy(gameObject);
-        //}
 	}
 
     void OnDestroy() {
         Batter.SetHasSwung(false);
+        Pitcher.ResetCanPitch();
+        Pitcher.ResetHasPitched();
+        PositionToMoveTo = GM.GetPitchTarget();
+        GM.NewBatter();
     }
-
-    //void OnTriggerEnter(Collider other) {
-    //    if (other.gameObject.CompareTag("Batter")) {
-    //        int random = Random.Range(0, 7);
-
-    //        PositionToMoveTo = Fielders[random].transform;
-    //    }
-    //}
 
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("HitterBox")) {
@@ -54,5 +47,9 @@ public class BaseballController : MonoBehaviour {
             transform.position,
             targetPosition.position,
             Speed * Time.deltaTime);
+    }
+
+    public void SetPositionToMoveTo(Transform pos) {
+        PositionToMoveTo = pos;
     }
 }

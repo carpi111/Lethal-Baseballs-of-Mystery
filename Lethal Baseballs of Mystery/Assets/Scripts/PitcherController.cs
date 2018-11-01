@@ -10,10 +10,12 @@ public class PitcherController : MonoBehaviour {
 
     public int RandomizeScale;
 
+    bool CanPitch = true;
+    bool HasPitched;
     Material CurrentBallMaterial;
 
 	void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (CanPitch && Input.GetMouseButtonDown(0)) {
             Pitch();
         }
 	}
@@ -23,6 +25,8 @@ public class PitcherController : MonoBehaviour {
                                       PitchPoint.position,
                                       PitchPoint.rotation);
         SetCurrentBallMaterial();
+        CanPitch = false;
+        HasPitched = true;
     }
 
     void SetCurrentBallMaterial() {
@@ -33,5 +37,21 @@ public class PitcherController : MonoBehaviour {
 
     public Material GetCurrentBallMaterial() {
         return CurrentBallMaterial;
+    }
+
+    public bool CanPitchAgain() {
+        return CanPitch;
+    }
+
+    public void ResetCanPitch() {
+        CanPitch = true;
+    }
+
+    public bool GetHasPitched() {
+        return HasPitched;
+    }
+
+    public void ResetHasPitched() {
+        HasPitched = false;
     }
 }

@@ -3,7 +3,8 @@
 public class BatterController : MonoBehaviour {
 
     public float RunSpeed;
-    public Vector3 PosAdjustment;
+    public Vector3 XPosAdjustment;
+    public Vector3 ZPosAdjustment;
     public Material BadBallMaterial;
 
     GameManager GM;
@@ -13,45 +14,58 @@ public class BatterController : MonoBehaviour {
     GameObject SecondBase;
     GameObject ThirdBase;
     GameObject HomeBase;
+    GameObject CurrentBase;
     GameObject BaseToMoveTo;
+    Transform GoodHitTarget;
 
     bool HasSwung;
+    bool CanSwing;
+    bool MovingToBase;
+    bool HitBall;
+    bool NeedsNewBatter;
+    bool IsRunner;
 
 	void Start() {
         GM = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
-        Pitcher = GM.GetPitcher();
-        FirstBase  = GameObject.FindWithTag("FirstBase");
-        SecondBase = GameObject.FindWithTag("SecondBase");
-        ThirdBase  = GameObject.FindWithTag("ThirdBase");
-        HomeBase   = GameObject.FindWithTag("HomeBase");
+        Pitcher       = GM.GetPitcher();
+        FirstBase     = GameObject.FindWithTag("FirstBase");
+        SecondBase    = GameObject.FindWithTag("SecondBase");
+        ThirdBase     = GameObject.FindWithTag("ThirdBase");
+        HomeBase      = GameObject.FindWithTag("HomeBase");
+        GoodHitTarget = GameObject.FindWithTag("GoodHitTarget").transform;
+        CurrentBase = HomeBase;
 
-        transform.position = HomeBase.transform.position + PosAdjustment;
+        transform.position = HomeBase.transform.position
+            + XPosAdjustment
+            + ZPosAdjustment;
         BaseToMoveTo = HomeBase;
     }
 
     void Update() {
-        //if (Input.GetKeyDown(KeyCode.Alpha1)) {
-        //    BaseToMoveTo = FirstBase;
-        //} else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-        //    BaseToMoveTo = SecondBase;
-        //} else if (Input.GetKeyDown(KeyCode.Alpha3)) {
-        //    BaseToMoveTo = ThirdBase;
-        //} else if (Input.GetKeyDown(KeyCode.Alpha4)) {
-        //    BaseToMoveTo = HomeBase;
-        //}
+        if (!IsRunner) {
+            CheckSwing();
+        }
 
-        //HasSwung |= Input.GetKeyDown(KeyCode.Space);
-
-        CheckSwing();
-
-        //MoveToBase(BaseToMoveTo);
+        if (!HitBall) {
+            transform.position = HomeBase.transform.position
+                + XPosAdjustment
+                + ZPosAdjustment;
+        } else {
+            MoveToBase(BaseToMoveTo);
+        }
     }
 
     void MoveToBase(GameObject targetBase) {
         transform.position = Vector3.MoveTowards(
             transform.position,
-            targetBase.transform.position + PosAdjustment,
+            targetBase.transform.position + ZPosAdjustment,
             RunSpeed * Time.deltaTime);
+        CurrentBase = targetBase;
+
+        if (transform.position == targetBase.transform.position) {
+            SetNextBase();
+            GM.SetNeedsNewBatter(true);
+        }
     }
 
     public void SetBaseToMoveTo(GameObject targetBase) {
@@ -60,24 +74,71 @@ public class BatterController : MonoBehaviour {
 
     void CheckSwing() {
         if (GM.BallIsInHitBox()) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                // TODO: Hit ball
-                HasSwung = true;
-                print("SWUNG");
-            }
-        } else if (GM.BallDidExitHitBox()) {
-            if (HasSwung) {
-                // TODO: Run to base
+            if (!Input.GetKeyDown(KeyCode.Space)) return;
+
+            if (Pitcher.GetCurrentBallMaterial() != BadBallMaterial) {
+                GM.GetBaseball().SetPositionToMoveTo(GoodHitTarget);
+                GM.GetBaseball().Speed *= 2;
             } else {
-                // check if bad ball
+                Transform RandFielder = GM.GetRandomFielderPosition();
+                GM.GetBaseball().SetPositionToMoveTo(RandFielder);
+            }
+
+            HasSwung = true;
+            HitBall = true;
+            print("SWUNG");
+            MovingToBase = true;
+            IsRunner = true;
+
+            BaseToMoveTo = FirstBase;
+            CurrentBase = FirstBase;
+
+        } else if (GM.BallDidExitHitBox()) {
+            if (!HasSwung){
                 if (Pitcher.GetCurrentBallMaterial() != BadBallMaterial) {
+                    HitBall = false;
                     GM.AddStrike();
                 }
+
+                Destroy(GM.GetBaseball().gameObject, 0.65f);
             }
         }
 
-        //HasSwung = false;
         GM.SetBallExitedHitBox(false);
+    }
+
+    void MoveToNextBase() {
+        switch (CurrentBase.tag) {
+            case "HomeBase":
+                BaseToMoveTo = FirstBase;
+                break;
+            case "FirstBase":
+                BaseToMoveTo = SecondBase;
+                break;
+            case "SecondBase":
+                BaseToMoveTo = ThirdBase;
+                break;
+            case "ThirdBase":
+                BaseToMoveTo = HomeBase;
+                break;
+        }
+    }
+
+    void SetNextBase() {
+        switch (CurrentBase.tag) {
+            case "HomeBase":
+                CurrentBase = FirstBase;
+                break;
+            case "FirstBase":
+                CurrentBase = SecondBase;
+                break;
+            case "SecondBase":
+                CurrentBase = ThirdBase;
+                break;
+            case "ThirdBase":
+                CurrentBase = HomeBase;
+                break;
+        }
     }
 
     public bool PlayerHasSwung() {
@@ -86,5 +147,17 @@ public class BatterController : MonoBehaviour {
 
     public void SetHasSwung(bool val) {
         HasSwung = val;
+    }
+
+    public bool HasHitBall() {
+        return HitBall;
+    }
+
+    void SetHasSwung() {
+        HasSwung = true;
+    }
+
+    void ResetHasSwung() {
+        HasSwung = false;
     }
 }

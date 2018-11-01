@@ -19,5 +19,9 @@ public class HitterBoxController : MonoBehaviour {
 
         GM.SetBallInHitBox(false);
         GM.SetBallExitedHitBox(true);
+
+        if (!GM.GetBatter().HasHitBall()) {
+            Destroy(other.gameObject, 0.75f);
+        }
     }
 }

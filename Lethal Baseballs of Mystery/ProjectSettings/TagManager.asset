@@ -21,6 +21,7 @@ TagManager:
   - Baseball
   - Pitcher
   - HitterBox
+  - GoodHitTarget
   layers:
   - Default
   - TransparentFX
